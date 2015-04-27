@@ -45,17 +45,19 @@ function bindListviewButtons() {
                 console.log(info);
 
                 getCurrencyDetailsFromMarkets(info.MarketName, function(details) {
+                    var c = convertAmountToSatoshis;
+
                     console.log(details);
 
                     $('#detail h1').html(details.MarketCurrencyLong);
                     $('#detail img.logo').attr('src', details.LogoUrl);
-                    $('#detail .last').html(info.Last.toString());
-                    $('#detail .bid').html(info.Bid.toString());
-                    $('#detail .ask').html(info.Ask.toString());
-                    $('#detail .high').html(info.High.toString());
-                    $('#detail .low').html(info.Low.toString());
-                    $('#detail .btc_vol').html(info.BaseVolume.toString());
-                    $('#detail .currency_vol').html(info.Volume.toString());
+                    $('#detail .last').html(c(info.Last));
+                    $('#detail .bid').html(c(info.Bid));
+                    $('#detail .ask').html(c(info.Ask));
+                    $('#detail .high').html(c(info.High));
+                    $('#detail .low').html(c(info.Low));
+                    $('#detail .btc_vol').html(c(info.BaseVolume));
+                    $('#detail .currency_vol').html(c(info.Volume));
 
                     hideLoader();
                     $.mobile.changePage('#detail', { changeHash: false, transition: 'slide' });
@@ -68,11 +70,11 @@ function bindListviewButtons() {
 
 function showLoader() {
     var $this = $(this),
-        theme = $this.jqmData("theme") || $.mobile.loader.prototype.options.theme,
-        msgText = $this.jqmData("msgtext") || $.mobile.loader.prototype.options.text,
-        textVisible = $this.jqmData("textvisible") || $.mobile.loader.prototype.options.textVisible,
-        textonly = !!$this.jqmData("textonly"),
-        html = $this.jqmData("html") || "";
+        theme = $this.jqmData('theme') || $.mobile.loader.prototype.options.theme,
+        msgText = $this.jqmData('msgtext') || $.mobile.loader.prototype.options.text,
+        textVisible = $this.jqmData('textvisible') || $.mobile.loader.prototype.options.textVisible,
+        textonly = !!$this.jqmData('textonly'),
+        html = $this.jqmData('html') || '';
 
     $.mobile.loading("show", {
         text: msgText,
@@ -84,5 +86,9 @@ function showLoader() {
 }
 
 function hideLoader() {
-    $.mobile.loading("hide");
+    $.mobile.loading('hide');
+}
+
+function convertAmountToSatoshis(amount) {
+    return amount.toFixed(8);
 }
