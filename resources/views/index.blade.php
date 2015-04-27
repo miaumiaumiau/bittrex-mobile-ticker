@@ -5,7 +5,7 @@
     <title>Bittrex Mobile Ticker</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url('js/libs/jquery-mobile/jquery.mobile-1.4.5.min.css') }}"/>
+    <link rel="stylesheet" href="/js/libs/jquery-mobile/jquery.mobile-1.4.5.min.css"/>
 
     <style>
         #detail table {
@@ -75,9 +75,9 @@
 
 <button class="show-page-loading-msg" data-textonly="false" data-textvisible="false" data-msgtext="" data-inline="true">Icon (default)</button>
 
-<script src="{{ url('js/libs/jquery-1.11.2.min.js') }}"></script>
-<script src="{{ url('js/libs/jquery-mobile/jquery.mobile-1.4.5.min.js') }}"></script>
-<script src="{{ url('js/app.js') }}"></script>
+<script src="/js/libs/jquery-1.11.2.min.js"></script>
+<script src="/js/libs/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+<script src="/js/app.js"></script>
 
 </body>
 </html>
