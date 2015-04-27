@@ -1,5 +1,5 @@
-var markets_api_url = 'http://localhost:8000/api/get_markets';
-var market_summary_api_url = 'http://localhost:8000/api/get_market_summary/';
+var markets_api_url = 'http://bittrex.brainpad.org/api/get_markets';
+var market_summary_api_url = 'http://bittrex.brainpad.org/api/get_market_summary/';
 var tickerListview = $('.ticker-listview');
 var markets = null;
 
