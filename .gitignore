@@ -4,5 +4,5 @@
 .DS_Store
 .idea
 .cordova
+_phonegap/plugins
 _phonegap/platforms
-_phomegap/plugins
