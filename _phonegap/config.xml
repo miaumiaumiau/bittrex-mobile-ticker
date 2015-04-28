@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Bittrex Mobile Ticker</name>
+    <name>Coinwatch</name>
     <description>
         Lets you check your altcoins on your mobile.
     </description>
     <author email="tom@brainpad.org" href="http://brainpad.org">
-        Bittrex Mobile Ticker
+        Coinwatch
     </author>
     <content src="index.html"/>
     <preference name="permissions" value="none"/>
@@ -47,7 +47,7 @@
     <gap:plugin name="org.apache.cordova.network-information"/>
     <gap:plugin name="org.apache.cordova.splashscreen"/>
     <gap:plugin name="org.apache.cordova.vibration"/>
-    <gap:plugin name="com.phonegap.plugin.statusbar"/>
+    <gap:plugin name="cordova-plugin-statusbar"/>
 
     <icon src="icon.png"/>
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png"/>
