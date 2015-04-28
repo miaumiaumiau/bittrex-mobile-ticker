@@ -1,4 +1,4 @@
-var index_row_template = '<li><a href="#" data-market-name="!market_name!"><img src="!logo!"><h2>!currency!</h2><p>!currency_long! (last: <strong>!last!</strong>)</p></a></li>',
+var index_row_template = '<li><a href="#" data-market-name="!market_name!"><img src="!logo!"><h2>!currency!</h2><p>!currency_long!</p><p>(last: <strong>!last!</strong>)</p></a></li>',
     tickerListview = $('#index .ticker-listview');
 
 function loadIndexPage(done) {

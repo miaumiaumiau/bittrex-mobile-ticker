@@ -22,6 +22,8 @@ function loadCurrencySettingsPage(done) {
 }
 
 $('a.ui-btn.settings').tap(function() {
+    showLoader();
+
     loadCurrencySettingsPage(function() {
         $.mobile.changePage('#currency_settings', { changeHash: false, transition: 'slide' });
         CurrencySettingstickerListview.listview('refresh');
