@@ -1,42 +1,33 @@
-var markets_api_url = 'http://bittrex.brainpad.org/api/get_markets';
-var market_summary_api_url = 'http://bittrex.brainpad.org/api/get_market_summary/';
 var tickerListview = $('#index .ticker-listview');
-var markets = null;
 
-$(function () {
+function initialize() {
     loadCurrencySettingsPage(function() {
         $('a.ui-btn.settings').tap(function() {
             $.mobile.changePage('#currency_settings', { changeHash: false, transition: 'slide' });
             return false;
         });
+        
+        hideLoader();
     });
 
     $('a.ui-btn.go_back').tap(function() {
         $.mobile.changePage('#index', { changeHash: false, transition: 'slide', reverse: true });
         return false;
     });
-});
+}
 
 function loadIndexPage(done) {
-
     if (done) done();
 }
 
 function loadCurrencySettingsPage(done) {
-    showLoader();
-
-    $.getJSON(markets_api_url, function (data) {
-        if (data.success) {
-            markets = data.result;
-            data.result.forEach(function (ticker) {
-                tickerListview.append('<li><a href="#" data-market-name="' + ticker.MarketName + '"><img src="' + ticker.LogoUrl + '"><h2>' + ticker.MarketCurrency + '</h2><p>' + ticker.MarketCurrencyLong + '</p></a></li>');
-            });
-            hideLoader();
-            bindListviewButtons();
-            tickerListview.listview('refresh');
-            if (done) done();
-        }
+    markets.forEach(function (ticker) {
+        tickerListview.append('<li><a href="#" data-market-name="' + ticker.MarketName + '"><img src="' + ticker.LogoUrl + '"><h2>' + ticker.MarketCurrency + '</h2><p>' + ticker.MarketCurrencyLong + '</p></a></li>');
     });
+    hideLoader();
+    bindListviewButtons();
+    tickerListview.listview('refresh');
+    if (done) done();
 }
 
 function getCurrencyDetailsFromMarkets(market_name, done) {
