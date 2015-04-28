@@ -7,7 +7,7 @@ var market_details = null;
 
 $(function() {
     showLoader();
-	
+
 	// initial loading of markets data
 	fetchMarkets(function(data) {
 		markets = data;
@@ -36,6 +36,8 @@ function fetchMarketDetails(market_name, done) {
 
 	done({});
 }
+
+function getMarket
 
 function loadSettings() {
 	settings = {

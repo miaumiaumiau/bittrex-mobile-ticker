@@ -1,7 +1,7 @@
 var tickerListview = $('#index .ticker-listview');
 
 function initialize() {
-    loadCurrencySettingsPage(function() {
+    loadIndexPage(function() {
         $('a.ui-btn.settings').tap(function() {
             $.mobile.changePage('#currency_settings', { changeHash: false, transition: 'slide' });
             return false;
@@ -17,6 +17,13 @@ function initialize() {
 }
 
 function loadIndexPage(done) {
+    markets.forEach(function (ticker) {
+        tickerListview.append('<li><a href="#" data-market-name="' + ticker.MarketName + '"><img src="' + ticker.LogoUrl + '"><h2>' + ticker.MarketCurrency + '</h2><p>' + ticker.MarketCurrencyLong + '</p></a></li>');
+    });
+    hideLoader();
+    bindListviewButtons();
+    tickerListview.listview('refresh');
+
     if (done) done();
 }
 
