@@ -2,6 +2,10 @@ var index_row_template = '<li><a href="#" data-market-name="!market_name!"><img 
     tickerListview = $('#index .ticker-listview');
 
 function loadIndexPage(done) {
+    // clear list
+    // todo: 2nd time+ not working
+    tickerListview.empty();
+
     settings.watched_currencies.forEach(function (market_name) {
         var ticker = getMarketByMarketName(market_name);
 

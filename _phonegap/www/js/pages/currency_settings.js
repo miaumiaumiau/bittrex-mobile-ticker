@@ -1,4 +1,4 @@
-var currency_settings_row_template = '<li><a href="#" data-market-name="!market_name!"><img src="!logo!"><h2>!currency!</h2><p>!currency_long!</p></a><input type="checkbox" name="currency" value="!market_name!"></li>',
+var currency_settings_row_template = '<li><fieldset data-role="controlgroup" data-iconpos="right"><legend>!currency! / !currency_long!</legend><input type="checkbox" name="currency" style="float:right;margin-top:-16px" value="!market_name!"></fieldset></li>',
     CurrencySettingstickerListview = $('#currency_settings .ticker-listview');
 
 function loadCurrencySettingsPage(done) {
@@ -9,7 +9,6 @@ function loadCurrencySettingsPage(done) {
 
         var prepared_template = fill_template(currency_settings_row_template, {
             market_name: ticker.MarketName,
-            logo: ticker.LogoUrl,
             currency: ticker.MarketCurrency,
             currency_long: ticker.MarketCurrencyLong
         });
@@ -17,21 +16,30 @@ function loadCurrencySettingsPage(done) {
         CurrencySettingstickerListview.append(prepared_template);
     });
 
-    hideLoader();
     if (done) done();
 }
 
 $('a.ui-btn.settings').tap(function() {
-    showLoader();
+    $.mobile.changePage('#currency_settings', { changeHash: false, transition: 'slide' });
 
     loadCurrencySettingsPage(function() {
-        $.mobile.changePage('#currency_settings', { changeHash: false, transition: 'slide' });
         CurrencySettingstickerListview.listview('refresh');
 
+        $('input[type=checkbox]').each(function() {
+            if (isWatchedCurrency($(this.outerHTML).val())) {
+                $(this).prop('checked', true);
+            }
+        });
+
         $('a.ui-btn.save_currency_settings').tap(function() {
-            $('input[name="currency"]:checked').each(function (t, o) {
-                console.log(t, o);
+            var selected = [];
+            $('input[type=checkbox]').each(function () {
+                if (this.checked) {
+                    selected.push($(this.outerHTML).val());
+                }
             });
+
+            saveSettings('watched_currencies', selected);
         });
     });
 

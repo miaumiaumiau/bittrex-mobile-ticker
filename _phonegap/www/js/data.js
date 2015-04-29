@@ -19,6 +19,13 @@ $(function() {
 	});
 });
 
+function reloadWatchedCurrenciesMarketDetails(done) {
+    fetchWatchedCurrenciesMarketDetails(function(details) {
+        watched_currencies_details = details;
+        done();
+    });
+}
+
 function fetchMarkets(done) {
     $.getJSON(markets_api_url, function (data) {
         if (data.success) {
@@ -89,8 +96,8 @@ function loadSettings() {
 	};
 }
 
-function saveSettings(updated_settings) {
-	settings = updated_settings;
+function saveSettings(key, updated_settings) {
+	settings[key] = updated_settings;
 }
 
 function isWatchedCurrency(currency) {

@@ -4,7 +4,12 @@ function initialize() {
     });
 
     $('a.ui-btn.go_back').tap(function() {
-        $.mobile.changePage('#index', { changeHash: false, transition: 'slide', reverse: true });
+        reloadWatchedCurrenciesMarketDetails(function() {
+            loadIndexPage(function() {
+                hideLoader();
+                $.mobile.changePage('#index', { changeHash: false, transition: 'slide', reverse: true });
+            });
+        });
         return false;
     });
 }
