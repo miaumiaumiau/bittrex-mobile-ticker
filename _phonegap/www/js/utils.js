@@ -22,3 +22,16 @@ function hideLoader() {
 function convertAmountToSatoshis(amount) {
     return amount.toFixed(8);
 }
+
+function bindBackButton() {
+    $('a.ui-btn.go_back').unbind('tap');
+    $('a.ui-btn.go_back').tap(function() {
+        reloadWatchedCurrenciesMarketDetails(function() {
+            loadIndexPage(function() {
+                hideLoader();
+                $.mobile.changePage('#index', { changeHash: false, transition: 'slide', reverse: true });
+            });
+        });
+        return false;
+    });
+}

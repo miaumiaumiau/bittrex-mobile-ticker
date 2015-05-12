@@ -26,8 +26,9 @@ function loadIndexPage(done) {
         });
         bindListviewButtons();
         tickerListview.listview('refresh');
+    } else {
+        alert('Welcome! please tap on the gear to select a few coins to watch.');
     }
 
-    hideLoader();
     if (done) done();
 }

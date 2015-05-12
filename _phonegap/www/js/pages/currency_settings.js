@@ -32,6 +32,8 @@ $('a.ui-btn.settings').tap(function() {
             }
         });
 
+        bindBackButton();
+
         $('a.ui-btn.save_currency_settings').tap(function() {
             var selected = [];
             $('input[type=checkbox]').each(function () {
