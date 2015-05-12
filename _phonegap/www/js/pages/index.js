@@ -5,28 +5,29 @@ function loadIndexPage(done) {
     // clear list
     // todo: 2nd time+ not working
     tickerListview.empty();
+    var watched_currencies = getSetting('watched_currencies');
+    if (watched_currencies) {
+        watched_currencies.forEach(function (market_name) {
+            var ticker = getMarketByMarketName(market_name);
 
-    settings.watched_currencies.forEach(function (market_name) {
-        var ticker = getMarketByMarketName(market_name);
+            if (!ticker.LogoUrl) {
+                ticker.LogoUrl = 'http://www.money-insider.de/wp-content/uploads/2013/05/bitcoins-coin-muenze.png';
+            }
 
-        if (!ticker.LogoUrl) {
-            ticker.LogoUrl = 'http://www.money-insider.de/wp-content/uploads/2013/05/bitcoins-coin-muenze.png';
-        }
+            var prepared_template = fill_template(index_row_template, {
+                market_name: ticker.MarketName,
+                logo: ticker.LogoUrl,
+                currency: ticker.MarketCurrency,
+                currency_long: ticker.MarketCurrencyLong,
+                last: convertAmountToSatoshis(getWatchedCurrencyDetailsByMarketName(ticker.MarketName).Last)
+            });
 
-        var prepared_template = fill_template(index_row_template, {
-            market_name: ticker.MarketName,
-            logo: ticker.LogoUrl,
-            currency: ticker.MarketCurrency,
-            currency_long: ticker.MarketCurrencyLong,
-            last: convertAmountToSatoshis(getWatchedCurrencyDetailsByMarketName(ticker.MarketName).Last)
+            tickerListview.append(prepared_template);
         });
-
-        tickerListview.append(prepared_template);
-    });
+        bindListviewButtons();
+        tickerListview.listview('refresh');
+    }
 
     hideLoader();
-    bindListviewButtons();
-    tickerListview.listview('refresh');
-
     if (done) done();
 }

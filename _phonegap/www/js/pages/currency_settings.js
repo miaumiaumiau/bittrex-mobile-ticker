@@ -25,8 +25,9 @@ $('a.ui-btn.settings').tap(function() {
     loadCurrencySettingsPage(function() {
         CurrencySettingstickerListview.listview('refresh');
 
+        var watched_currencies = getSetting('watched_currencies');
         $('input[type=checkbox]').each(function() {
-            if (isWatchedCurrency($(this.outerHTML).val())) {
+            if (watched_currencies.indexOf($(this.outerHTML).val()) > -1) {
                 $(this).prop('checked', true);
             }
         });

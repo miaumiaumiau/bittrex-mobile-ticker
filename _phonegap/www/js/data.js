@@ -1,11 +1,9 @@
 var markets_api_url = 'http://bittrex.brainpad.org/api/get_markets',
     market_summary_api_url = 'http://bittrex.brainpad.org/api/get_market_summary/',
-    settings = null,
     markets = null,
     watched_currencies_details = null;
 
 $(function() {
-    settings = loadSettings();
     showLoader();
 
 	// initial loading of markets data
@@ -37,20 +35,26 @@ function fetchMarkets(done) {
 }
 
 function fetchWatchedCurrenciesMarketDetails(done) {
-    var result = [],
-        total = settings.watched_currencies.length,
-        i = 0;
+    var watched_currencies = getSetting('watched_currencies');
 
-    settings.watched_currencies.forEach(function(watched_currency) {
-        fetchMarketDetails(watched_currency, function(details) {
-            result.push(details);
-            i++;
+    if (watched_currencies) {
+        var result = [],
+            total = watched_currencies.length,
+            i = 0;
 
-            if (i == total) {
-                done(result);
-            }
+        watched_currencies.forEach(function (watched_currency) {
+            fetchMarketDetails(watched_currency, function (details) {
+                result.push(details);
+                i++;
+
+                if (i == total) {
+                    done(result);
+                }
+            });
         });
-    });
+    } else {
+        done(false);
+    }
 }
 
 function fetchMarketDetails(market_name, done) {
@@ -87,20 +91,37 @@ function getWatchedCurrencyDetailsByMarketName(market_name) {
     return market;
 }
 
-function loadSettings() {
-	return {
-		watched_currencies: [
-			'BTC-UTC',
-			'BTC-XEM'
-		]
-	};
+function getSetting(key) {
+    if (localStorage.settings) {
+        var settings = localStorage.settings;
+        var settings_obj = JSON.parse(settings);
+    } else {
+        // default dataset
+        var settings_obj = {
+            watched_currencies: [
+            ]
+        };
+    }
+
+    // returns whole settings object or only a value
+    if (key) {
+        return settings_obj[key];
+    } else {
+        return settings_obj;
+    }
 }
 
 function saveSettings(key, updated_settings) {
-	settings[key] = updated_settings;
+    var settings = (getSetting()) ? getSetting() : {};
+    settings[key] = updated_settings;
+    localStorage.setItem('settings', JSON.stringify(settings));
 }
 
 function isWatchedCurrency(currency) {
-	var settings = loadSettings();
-	return (settings.watched_currencies.indexOf(currency) > -1) ? true : false;
+    var watched_currencies = getSetting('watched_currencies');
+    if (watched_currencies) {
+	    return (watched_currencies.indexOf(currency) > -1) ? true : false;
+    } else {
+        return false;
+    }
 }
